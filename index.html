@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport"
+        content="width=device-width,
+                 initial-scale=1,
+                 maximum-scale=1,
+                 user-scalable=no,
+                 viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <title>Gift 💖</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      overflow: hidden;
+      color: #fff;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      touch-action: none; /* 👉 отключает масштабирование жестами */
+    }
+
+    body {
+      position: fixed; /* предотвращает смещение при скролле */
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+    }
+
+    .center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+
+    .title {
+      font-size: 26px;
+      margin-bottom: 10px;
+    }
+
+    .subtitle {
+      font-size: 16px;
+      opacity: 0.85;
+    }
+
+    .heart {
+      position: fixed;
+      pointer-events: none;
+      z-index: 99;
+      font-size: 22px;
+      opacity: 0;
+      transform: translateY(-20px) scale(0.8);
+      animation: fall linear forwards;
+    }
+
+    @keyframes fall {
+      0% { opacity: 0; transform: translateY(-10vh) scale(0.7) rotate(0deg); }
+      10% { opacity: 1; }
+      100% { opacity: 0; transform: translateY(120vh) scale(1.2) rotate(360deg); }
+    }
+
+    .close-btn {
+      position: fixed;
+      top: calc(env(safe-area-inset-top) + 12px);
+      right: 16px;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      color: #fff;
+      font-size: 15px;
+      padding: 8px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      backdrop-filter: blur(5px);
+      transition: background 0.3s ease;
+    }
+
+    .close-btn:hover {
+      background: rgba(255,255,255,0.2);
+    }
+  </style>
+</head>
+<body>
+  <div class="center">
+    <div class="title">Хуй тебе</div>
+    <div class="subtitle">А не подарок ❤️</div>
+  </div>
+
+  <button class="close-btn" onclick="closeApp()">Закрыть</button>
+
+  <script>
+    // Telegram API инициализация
+    window.addEventListener("DOMContentLoaded", () => {
+      if (window.Telegram && window.Telegram.WebApp) {
+        window.Telegram.WebApp.ready();
+        window.Telegram.WebApp.expand(); // 🔥 делает во весь экран
+      }
+    });
+
+    // Анимация сердечек
+    function spawnHeart() {
+      const heart = document.createElement('div');
+      heart.className = 'heart';
+      heart.textContent = ['❤️','💲','💞','💲'][Math.floor(Math.random() * 4)];
+      heart.style.left = Math.random() * 100 + 'vw';
+      heart.style.animationDuration = (4 + Math.random() * 3) + 's';
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 7000);
+    }
+    setInterval(spawnHeart, 350);
+
+    // Закрытие приложения
+    function closeApp() {
+      if (window.Telegram && window.Telegram.WebApp) {
+        window.Telegram.WebApp.close();
+      } else {
+        window.close();
+      }
+    }
+  </script>
+</body>
+</html>
